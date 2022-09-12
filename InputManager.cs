@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     GameGrid gameGrid;
     [SerializeField] private LayerMask whatIsAGridLayer;
     [SerializeField] private LayerMask whatIsAGamePiece;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +21,26 @@ public class InputManager : MonoBehaviour
         //piece_movement pieceMouseIsOver = IsMouseOverAGamePiece();
         if (cellMouseIsOver != null)
         {
-            if (Input.GetMouseButtonDown(0))
+            Color defaultColor = Color.blue;
+            string originalColor = cellMouseIsOver.name[^14..].Trim(' ', ')').Substring(0,5);
+            if (originalColor == "White"){
+                defaultColor = Color.white;
+            }
+            else
             {
-                cellMouseIsOver.GetComponentInChildren<SpriteRenderer>().material.color = Color.red;
+                defaultColor = Color.black;
+            }
+            Color currentColor = cellMouseIsOver.GetComponentInChildren<MeshRenderer>().material.color;
+            if (Input.GetMouseButtonDown(0) && defaultColor == currentColor)
+            {
+                defaultColor = cellMouseIsOver.GetComponentInChildren<MeshRenderer>().material.color;
+                cellMouseIsOver.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+                currentColor = cellMouseIsOver.GetComponentInChildren<MeshRenderer>().material.color;
+            }
+            else if (Input.GetMouseButtonDown(0) && defaultColor != currentColor)
+            {
+                cellMouseIsOver.GetComponentInChildren<MeshRenderer>().material.color = defaultColor;
+                currentColor = cellMouseIsOver.GetComponentInChildren<MeshRenderer>().material.color;
             }
         }
         /*

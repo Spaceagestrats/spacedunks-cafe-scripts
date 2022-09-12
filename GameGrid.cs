@@ -37,21 +37,31 @@ public class GameGrid : MonoBehaviour
                 gameGrid[x, y] = Instantiate(gridCellPrefab, new Vector3(x * gridSpaceSize,0, y * gridSpaceSize), Quaternion.identity);
                 gameGrid[x, y].GetComponent<GridCell>().SetPosition(x, y);
                 gameGrid[x, y].transform.parent = transform;
-                gameGrid[x, y].gameObject.name = "Grid space ( X: "+ x.ToString() + " , Y: " + y.ToString() + ")";
+                
                 if (y % 2 == 0)
-                {
-                    if (tileTracker % 2 == 0)
-                    {
-                        gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
-                    }
-                }
-                else
                 {
                     if (tileTracker % 2 == 1)
                     {
                         gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+                        gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: White Square)";
                     }
-
+                    else
+                    {
+                        gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: Black Square)";
+                    }
+                }
+                else
+                {
+                    if (tileTracker % 2 == 0)
+                    {
+                        gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+                        gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: White Square)";
+                    }
+                    else
+                    {
+                        gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: Black Square)";
+                    }
+                    //some comments
 
                 }
                 tileTracker++;
