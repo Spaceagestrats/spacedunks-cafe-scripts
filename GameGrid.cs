@@ -43,6 +43,7 @@ public class GameGrid : MonoBehaviour
                     if (tileTracker % 2 == 1)
                     {
                         gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+                        Color defaultColor = gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color;
                         gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: White Square)";
                     }
                     else
@@ -55,13 +56,13 @@ public class GameGrid : MonoBehaviour
                     if (tileTracker % 2 == 0)
                     {
                         gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+                        Color defaultColor = gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color;
                         gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: White Square)";
                     }
                     else
                     {
                         gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: Black Square)";
                     }
-                    //some comments
 
                 }
                 tileTracker++;
@@ -69,7 +70,6 @@ public class GameGrid : MonoBehaviour
             }
         }
     }
-
     //Gets the grid position from world position
     public Vector2Int GetGridPosFromWorld(Vector3 worldPosition)
     {
@@ -88,6 +88,11 @@ public class GameGrid : MonoBehaviour
         float y = gridPos.y * gridSpaceSize;
 
         return new Vector3(x, 0, y);
+    }
+    public Color GetColor(int x, int y)
+    {
+        Color color = gameGrid[x, y].GetComponent<MeshRenderer>().material.color;
+        return color;
     }
 }
 
