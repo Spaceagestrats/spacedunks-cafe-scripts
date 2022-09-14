@@ -14,16 +14,14 @@ public class GamePiece : MonoBehaviour
     {
         gameGrid = FindObjectOfType<GameGrid>();
         float spacing = gameGrid.gridSpaceSize;
+        transform.position = new Vector3(piecex*spacing, placementHeight, piecey*spacing);
         placePiece(spacing*piecex, spacing*piecey);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isSelected)
-        {
-            transform.position = Input.mousePosition;
-        }
+        
     }
 
     void placePiece(float x, float y)

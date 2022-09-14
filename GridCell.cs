@@ -26,4 +26,5 @@ public class GridCell : MonoBehaviour
     {
         return new Vector2Int(posX, posY);
     }
+    
 }
