@@ -6,13 +6,15 @@ public class GamePiece : MonoBehaviour
 {
     [SerializeField] private GameObject PiecePrefab;
     GameGrid gameGrid;
+    private GameObject[] gamePieces;
     public float placementHeight = 0;
     public int piecex, piecey = 0;
     public bool isSelected = false;
     // Start is called before the first frame update
     void Start()
     {
-        gameGrid = FindObjectOfType<GameGrid>();
+        
+        gameGrid = FindObjectOfType<GameGrid>( );
         float spacing = gameGrid.gridSpaceSize;
         transform.position = new Vector3(piecex*spacing, placementHeight, piecey*spacing);
         placePiece(spacing*piecex, spacing*piecey);
@@ -29,4 +31,5 @@ public class GamePiece : MonoBehaviour
         GameObject newpiece = Instantiate(PiecePrefab, new Vector3(x, placementHeight, y), Quaternion.identity);
         newpiece.transform.parent = transform;
     }
+    
 }

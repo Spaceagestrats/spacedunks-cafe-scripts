@@ -5,41 +5,21 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     [SerializeField] private LayerMask whatIsAGridTile;
-    GamePiece gamePiece = null;
+    GamePiece[] gamePiece = null;
     private Renderer renderer;
+    InputManager inputManager;
     // Start is called before the first frame update
     void Start()
     {
         renderer = GetComponent<Renderer>();
-        gamePiece = FindObjectOfType<GamePiece>();
+        gamePiece = FindObjectsOfType<GamePiece>();
+        inputManager = FindObjectOfType<InputManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (gamePiece.isSelected)
-        {
-            renderer.material.color = Color.green;
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, whatIsAGridTile))
-            {
-                transform.position = new Vector3(hitInfo.transform.position.x, gamePiece.placementHeight, hitInfo.transform.position.z);
-            }
-            
-        }
-        else
-        {
-            renderer.material.color = Color.cyan;
-        }
-    }
-
-    private void OnMouseEnter()
-    {
-        renderer.material.color = Color.green;
         
     }
-    private void OnMouseExit()
-    {
-        renderer.material.color = Color.cyan;
-    }
+
 }
