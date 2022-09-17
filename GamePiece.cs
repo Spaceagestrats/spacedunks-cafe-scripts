@@ -9,15 +9,14 @@ public class GamePiece : MonoBehaviour
     private GameObject[] gamePieces;
     public float placementHeight = 0;
     public int piecex, piecey = 0;
-    public bool isSelected = false;
     // Start is called before the first frame update
     void Start()
     {
         
         gameGrid = FindObjectOfType<GameGrid>( );
-        float spacing = gameGrid.gridSpaceSize;
-        transform.position = new Vector3(piecex*spacing, placementHeight, piecey*spacing);
-        placePiece(spacing*piecex, spacing*piecey);
+        Vector3 tileSpot = gameGrid.GetWorldPosFromGridPos(new Vector2Int(piecex, piecey));
+        placePiece(tileSpot.x, tileSpot.z);
+        
     }
 
     // Update is called once per frame
