@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GridCell : MonoBehaviour
 {
+    public Color oldColor;
+    private void Start()
+    {
+        oldColor = gameObject.GetComponent<MeshRenderer>().material.color;
+    }
     private int posX;
     private int posY;
 
@@ -12,7 +17,6 @@ public class GridCell : MonoBehaviour
 
     //Saves if the grid space is occupied or not.
     public bool isOccupied = false;
-
     // set the position of this grid cell on the grid
 
     public void SetPosition(int x, int y)
@@ -26,5 +30,11 @@ public class GridCell : MonoBehaviour
     {
         return new Vector2Int(posX, posY);
     }
+    public void ChangeOwnColor ()
+    {
+        
+        gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
+    }
+    
     
 }

@@ -77,7 +77,7 @@ public class GameGrid : MonoBehaviour
         int y = Mathf.FloorToInt(worldPosition.z / gridSpaceSize);
 
         x = Mathf.Clamp(x, 0, width);
-        y = Mathf.Clamp(x, 0, height);
+        y = Mathf.Clamp(y, 0, height);
 
         return new Vector2Int(x, y);
 
