@@ -43,7 +43,6 @@ public class GameGrid : MonoBehaviour
                     if (tileTracker % 2 == 1)
                     {
                         gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
-                        Color defaultColor = gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color;
                         gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: White Square)";
                     }
                     else
@@ -56,7 +55,6 @@ public class GameGrid : MonoBehaviour
                     if (tileTracker % 2 == 0)
                     {
                         gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
-                        Color defaultColor = gameGrid[x, y].gameObject.GetComponent<MeshRenderer>().material.color;
                         gameGrid[x, y].gameObject.name = "Grid space ( X: " + x.ToString() + " , Y: " + y.ToString() + ", Color: White Square)";
                     }
                     else

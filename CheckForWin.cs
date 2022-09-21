@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class CheckForWin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // Update is called once per frame
+    [SerializeField] private LayerMask whatIsAGamePiece;
+    [SerializeField] private GameObject coffeeCup;
+    public float placementHeight;
+    public float x;
+    public float y;
+    public float spacing;
+    
+
+    private void Start()
     {
         
+        placePiece(x*spacing, y*spacing);
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if(isGameWon())
+        
+        if (IsGameWon())
         {
+            
             Debug.Log("CONGRATS YOU DID IT KING/QUEEN/MONARCH LUV U");
+            Time.timeScale = 0.2f;
         }   
     }
-    bool isGameWon()
+    bool IsGameWon()
     {
         GamePiece[] piecesOnBoard = FindObjectsOfType<GamePiece>();
         if (piecesOnBoard.Length == 0)
@@ -29,5 +39,11 @@ public class CheckForWin : MonoBehaviour
         {
             return false;
         }
+    }
+   
+    void placePiece(float x, float y)
+    {
+        GameObject newpiece = Instantiate(coffeeCup, new Vector3(x, placementHeight, y), Quaternion.identity);
+        newpiece.transform.parent = transform;
     }
 }

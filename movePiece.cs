@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +21,6 @@ public class movePiece : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, whatIsAGamePiece))
         {
@@ -32,7 +29,7 @@ public class movePiece : MonoBehaviour
 
                 selectedPiece = hitInfo.collider.gameObject;
                 startPos = gameGrid.GetComponent<GameGrid>().GetGridPosFromWorld(selectedPiece.transform.position);
-                highlightValidMoves(startPos.x, startPos.y, gameGrid);
+                HighlightValidMoves(startPos.x, startPos.y);
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit gridHitInfo, 100f, whatIsAGridLayer))
@@ -40,10 +37,10 @@ public class movePiece : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && selectedPiece != null)
             {
                 Vector2Int targetTile = gridHitInfo.collider.gameObject.GetComponent<GridCell>().GetPosition();
-                if (isMoveValid(startPos.x,startPos.y , targetTile.x, targetTile.y))
+                if (IsMoveValid(startPos.x,startPos.y , targetTile.x, targetTile.y))
                 {
 
-                    moveSelectedPiece(targetTile.x, targetTile.y, gridScale);
+                    MoveSelectedPiece(targetTile.x, targetTile.y, gridScale);
                     selectedPiece = null;
                     
                 }
@@ -51,13 +48,13 @@ public class movePiece : MonoBehaviour
                 {
                     selectedPiece = null;
                 }
-                clearHighlights();
+                ClearHighlights();
             }
             
         }
-        
     }
-    private void clearHighlights()
+    
+    private void ClearHighlights()
     {
         foreach (GridCell cell in gridCells)
         {
@@ -65,12 +62,13 @@ public class movePiece : MonoBehaviour
         }
         
     }
-    private void highlightValidMoves(int startx, int starty, GameGrid gameGrid)
+    private void HighlightValidMoves(int startx, int starty)
     {
+        gridCells = FindObjectsOfType<GridCell>();
         if (selectedPiece.GetComponentInParent<knight>())
         {
             List<Vector2> validKnightMoves = selectedPiece.GetComponentInParent<knight>().validMoves(startx, starty);
-            gridCells = FindObjectsOfType<GridCell>();
+            
 
             foreach (Vector2 validMove in validKnightMoves)
             {
@@ -87,7 +85,6 @@ public class movePiece : MonoBehaviour
         else if (selectedPiece.GetComponentInParent<King>())
         {
             List<Vector2> validKingMoves = selectedPiece.GetComponentInParent<King>().validMoves(startx, starty);
-            gridCells = FindObjectsOfType<GridCell>();
 
             foreach (Vector2 validMove in validKingMoves)
             {
@@ -103,7 +100,6 @@ public class movePiece : MonoBehaviour
         else if (selectedPiece.GetComponentInParent<pawn>())
         {
             List<Vector2> validPawnMoves = selectedPiece.GetComponentInParent<pawn>().validMoves(startx, starty);
-            gridCells = FindObjectsOfType<GridCell>();
             if (validPawnMoves != null)
             {
                 foreach (Vector2 validMove in validPawnMoves)
@@ -120,11 +116,13 @@ public class movePiece : MonoBehaviour
         }
     }
 
-    void moveSelectedPiece(int x, int y, float gridScale)
+    void MoveSelectedPiece(int x, int y, float gridScale)
     {
-        selectedPiece.transform.position = new Vector3(x*gridScale, 2, y*gridScale);
+        
+        selectedPiece.transform.position = new Vector3(x * gridScale, 2, y * gridScale);
+        selectedPiece.GetComponentInParent<GamePiece>().CheckForCollision();
     }
-    bool isMoveValid(float startx, float starty, int destx, int desty)
+    bool IsMoveValid(float startx, float starty, int destx, int desty)
     {
         Vector2 attemptedMove = new Vector2(destx, desty);
         if (selectedPiece.GetComponentInParent<knight>())
@@ -178,4 +176,6 @@ public class movePiece : MonoBehaviour
         }
         else return false;
     }
+
+    
 }

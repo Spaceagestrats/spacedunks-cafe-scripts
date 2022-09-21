@@ -5,6 +5,7 @@ using UnityEngine;
 public class GamePiece : MonoBehaviour
 {
     [SerializeField] private GameObject PiecePrefab;
+    Transform target;
     GameGrid gameGrid;
     private GameObject[] gamePieces;
     public float placementHeight = 0;
@@ -22,9 +23,15 @@ public class GamePiece : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
-
+    public void CheckForCollision()
+    {
+        target = FindObjectOfType<CheckForWin>().transform.GetChild(0);
+        if ((gameObject.transform.GetChild(0).position.x == target.position.x)&& (gameObject.transform.GetChild(0).position.z == target.position.z))
+        {
+            Destroy(gameObject);
+        }
+    }
     void placePiece(float x, float y)
     {
         GameObject newpiece = Instantiate(PiecePrefab, new Vector3(x, placementHeight, y), Quaternion.identity);
