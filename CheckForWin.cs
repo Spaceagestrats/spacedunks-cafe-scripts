@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CheckForWin : MonoBehaviour
 {
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class CheckForWin : MonoBehaviour
         {
             
             Debug.Log("CONGRATS YOU DID IT KING/QUEEN/MONARCH LUV U");
-            Time.timeScale = 0.2f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }   
     }
     bool IsGameWon()

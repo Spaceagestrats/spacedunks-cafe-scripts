@@ -8,7 +8,7 @@ public class GamePiece : MonoBehaviour
     Transform target;
     GameGrid gameGrid;
     private GameObject[] gamePieces;
-    public float placementHeight = 0;
+    float placementHeight = 3;
     public int piecex, piecey = 0;
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,7 @@ public class GamePiece : MonoBehaviour
         target = FindObjectOfType<CheckForWin>().transform.GetChild(0);
         if ((gameObject.transform.GetChild(0).position.x == target.position.x)&& (gameObject.transform.GetChild(0).position.z == target.position.z))
         {
+            target.GetChild(0).GetComponent<ParticleSystem>().Play();
             Destroy(gameObject);
         }
     }

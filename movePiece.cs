@@ -26,7 +26,7 @@ public class movePiece : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-
+                gameObject.transform.GetChild(0).GetComponent<AudioSource>().Play();
                 selectedPiece = hitInfo.collider.gameObject;
                 startPos = gameGrid.GetComponent<GameGrid>().GetGridPosFromWorld(selectedPiece.transform.position);
                 HighlightValidMoves(startPos.x, startPos.y);
@@ -119,7 +119,7 @@ public class movePiece : MonoBehaviour
     void MoveSelectedPiece(int x, int y, float gridScale)
     {
         
-        selectedPiece.transform.position = new Vector3(x * gridScale, 2, y * gridScale);
+        selectedPiece.transform.position = new Vector3(x * gridScale, 3, y * gridScale);
         selectedPiece.GetComponentInParent<GamePiece>().CheckForCollision();
     }
     bool IsMoveValid(float startx, float starty, int destx, int desty)

@@ -24,7 +24,7 @@ public class King : MonoBehaviour
                 //new position vector and the original position vector are equal to three, that is a valid move.
                 float changeInX = Mathf.Abs(startPosX - x);
                 float changeInY = Mathf.Abs(startPosY - y);
-                if (changeInX + changeInY == 1 || (changeInX == 1 && changeInY == 1))
+                if (changeInX + changeInY == 2 || (changeInX == 1 && changeInY == 2))
                 {
                     Vector2 validMove = new Vector2(x, y);
                     validMovesList.Add(validMove);
