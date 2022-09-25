@@ -120,7 +120,10 @@ public class movePiece : MonoBehaviour
     {
         
         selectedPiece.transform.position = new Vector3(x * gridScale, 3, y * gridScale);
-        selectedPiece.GetComponentInParent<GamePiece>().CheckForCollision();
+        if(selectedPiece.GetComponentInParent<GamePiece>().CheckForCollision())
+        {
+            gameObject.transform.GetChild(1).GetComponent<AudioSource>().Play();
+        }
     }
     bool IsMoveValid(float startx, float starty, int destx, int desty)
     {

@@ -24,14 +24,17 @@ public class GamePiece : MonoBehaviour
     void Update()
     {
     }
-    public void CheckForCollision()
+    public bool CheckForCollision()
     {
         target = FindObjectOfType<CheckForWin>().transform.GetChild(0);
         if ((gameObject.transform.GetChild(0).position.x == target.position.x)&& (gameObject.transform.GetChild(0).position.z == target.position.z))
         {
             target.GetChild(0).GetComponent<ParticleSystem>().Play();
+            
             Destroy(gameObject);
+            return true;
         }
+        else { return false; }
     }
     void placePiece(float x, float y)
     {
