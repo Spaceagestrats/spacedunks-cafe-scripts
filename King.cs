@@ -18,13 +18,13 @@ public class King : MonoBehaviour
         {
             for (int y = 0; y < 8; y++)
             {
-                //find valid moves for knight
-                //rules for moving knights are as follows:
+                //find valid moves for king
+                //rules for moving kings are as follows:
                 //if the absolute value of the sum of the difference (where the difference of x and y are > 0) of the
                 //new position vector and the original position vector are equal to three, that is a valid move.
                 float changeInX = Mathf.Abs(startPosX - x);
                 float changeInY = Mathf.Abs(startPosY - y);
-                if (changeInX + changeInY == 2 || (changeInX == 1 && changeInY == 2))
+                if (changeInX + changeInY == 0 || (changeInX == 1 && changeInY == 2))
                 {
                     Vector2 validMove = new Vector2(x, y);
                     validMovesList.Add(validMove);

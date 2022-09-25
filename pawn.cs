@@ -18,10 +18,9 @@ public class pawn : MonoBehaviour
         {
             for (int y = 0; y < 8; y++)
             {
-                //find valid moves for knight
-                //rules for moving knights are as follows:
-                //if the absolute value of the sum of the difference (where the difference of x and y are > 0) of the
-                //new position vector and the original position vector are equal to three, that is a valid move.
+                //find valid moves for pawn
+                //rules for moving pawns are as follows:
+                //if ONLY y increases by one, that is a valid move; except in cases where y exceeds the size of the board
                 float changeInX = x-startPosX;
                 float changeInY = y-startPosY;
                 if (changeInX == 0 && changeInY == 1)

@@ -15,7 +15,7 @@ public class movePiece : MonoBehaviour
     {
         gameGrid = FindObjectOfType<GameGrid>();
         gridScale = gameGrid.gridSpaceSize;
-        
+        gridCells = FindObjectsOfType<GridCell>();
     }
 
     // Update is called once per frame
@@ -26,6 +26,7 @@ public class movePiece : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                ClearHighlights();
                 gameObject.transform.GetChild(0).GetComponent<AudioSource>().Play();
                 selectedPiece = hitInfo.collider.gameObject;
                 startPos = gameGrid.GetComponent<GameGrid>().GetGridPosFromWorld(selectedPiece.transform.position);
@@ -36,6 +37,7 @@ public class movePiece : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && selectedPiece != null)
             {
+                
                 Vector2Int targetTile = gridHitInfo.collider.gameObject.GetComponent<GridCell>().GetPosition();
                 if (IsMoveValid(startPos.x,startPos.y , targetTile.x, targetTile.y))
                 {
@@ -65,12 +67,12 @@ public class movePiece : MonoBehaviour
     private void HighlightValidMoves(int startx, int starty)
     {
         gridCells = FindObjectsOfType<GridCell>();
-        if (selectedPiece.GetComponentInParent<knight>())
+        if (selectedPiece.GetComponentInParent<GamePiece>())
         {
-            List<Vector2> validKnightMoves = selectedPiece.GetComponentInParent<knight>().validMoves(startx, starty);
+            List<Vector2> validMoves = selectedPiece.GetComponentInParent<GamePiece>().validMoves(startx, starty);
             
 
-            foreach (Vector2 validMove in validKnightMoves)
+            foreach (Vector2 validMove in validMoves)
             {
 
                 foreach (GridCell cell in gridCells)
@@ -78,38 +80,6 @@ public class movePiece : MonoBehaviour
                     if (cell.GetPosition() == new Vector2Int((int)validMove.x, (int)validMove.y))
                     {
                         cell.ChangeOwnColor();
-                    }
-                }
-            }
-        }
-        else if (selectedPiece.GetComponentInParent<King>())
-        {
-            List<Vector2> validKingMoves = selectedPiece.GetComponentInParent<King>().validMoves(startx, starty);
-
-            foreach (Vector2 validMove in validKingMoves)
-            {
-                foreach (GridCell cell in gridCells)
-                {
-                    if (cell.GetPosition() == new Vector2Int((int)validMove.x, (int)validMove.y))
-                    {
-                        cell.ChangeOwnColor();
-                    }
-                }
-            }
-        }
-        else if (selectedPiece.GetComponentInParent<pawn>())
-        {
-            List<Vector2> validPawnMoves = selectedPiece.GetComponentInParent<pawn>().validMoves(startx, starty);
-            if (validPawnMoves != null)
-            {
-                foreach (Vector2 validMove in validPawnMoves)
-                {
-                    foreach (GridCell cell in gridCells)
-                    {
-                        if (cell.GetPosition() == new Vector2Int((int)validMove.x, (int)validMove.y))
-                        {
-                            cell.ChangeOwnColor();
-                        }
                     }
                 }
             }
@@ -128,52 +98,16 @@ public class movePiece : MonoBehaviour
     bool IsMoveValid(float startx, float starty, int destx, int desty)
     {
         Vector2 attemptedMove = new Vector2(destx, desty);
-        if (selectedPiece.GetComponentInParent<knight>())
+        if (selectedPiece.GetComponentInParent<GamePiece>())
         {
 
-            List<Vector2> validKnightMoves = selectedPiece.GetComponentInParent<knight>().validMoves(startx, starty);
-            if (validKnightMoves != null)
+            List<Vector2> validMoves = selectedPiece.GetComponentInParent<GamePiece>().validMoves(startx, starty);
+            foreach (Vector2 validMove in validMoves)
             {
-                for (int i = 0; i < validKnightMoves.Count; i++)
-                {
-                    if (attemptedMove == validKnightMoves[i])
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else if (selectedPiece.GetComponentInParent<King>()) 
-        {
-            List<Vector2> validKingMoves = selectedPiece.GetComponentInParent<King>().validMoves(startx, starty);
-            gridCells = FindObjectsOfType<GridCell>();
-
-            foreach (Vector2 validMove in validKingMoves)
-            {
-                if (validMove == attemptedMove)
+                if (attemptedMove == validMove)
                 {
                     return true;
                 }
-            }
-            return false;
-        }
-        else if (selectedPiece.GetComponentInParent<pawn>())
-        {
-            List<Vector2> validPawnMoves = selectedPiece.GetComponentInParent<pawn>().validMoves(startx, starty);
-            gridCells = FindObjectsOfType<GridCell>();
-
-            foreach (Vector2 validMove in validPawnMoves)
-            {
-                if (validMove == attemptedMove)
-                {
-                    return true;
-                }
-                    
             }
             return false;
         }
